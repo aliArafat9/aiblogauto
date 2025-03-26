@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function BlogAutomation() {
   //state
@@ -23,7 +24,7 @@ export default function BlogAutomation() {
     setSuggestedTitles([
       "AI-Powered Blog Post AI-Powered Blog Post AI-Powered Blog Post AI-Powered Blog Post",
       "Sustainable Lifestyle Sustainable Lifestyle Sustainable Lifestyle ",
-      "Innovative Ideas Innovative Ideas Innovative Ideas Innovative Ideas Innovative Ideas Innovative Ideas Innovative Ideas",
+      "Innovative Ideas ",
       "Evolution of Technology Evolution of Technology  ",
     ]);
   };
@@ -35,6 +36,10 @@ export default function BlogAutomation() {
   const generateImage = () => {
     setImage("https://via.placeholder.com/600");
   };
+  const handleSubmit = () => {
+    // TODO: Save the blog post to the database
+    console.log("Blog post saved:", { category, title, content, image });
+  };
 
   return (
     <div>
@@ -42,6 +47,7 @@ export default function BlogAutomation() {
         <CardHeader>
           <CardTitle>Create a New Blog Post</CardTitle>
         </CardHeader>
+
         <CardContent className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
@@ -127,6 +133,44 @@ export default function BlogAutomation() {
                 Get Content with AI
               </Button>
             </div>
+
+            {/* {markdown editor} */}
+            <div className="pt-5">
+              <MDEditor
+                value={content}
+                onChange={(value) => setContent(value || "")}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="image">Featured Image</Label>
+
+            <div className="flex gap-2 items-center">
+              <Button
+                className="flex-1"
+                onClick={generateImage}
+                variant={"outline"}
+              >
+                Generate Image
+              </Button>
+
+              <div className="flex-1">
+                {image && (
+                  <img
+                    src={image}
+                    alt="Featured Image"
+                    className="mt-2 max-w-full h-auto rounded-lg "
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Button onClick={handleSubmit} className="flex-1">
+              Submit Blog Post
+            </Button>
           </div>
         </CardContent>
       </Card>
