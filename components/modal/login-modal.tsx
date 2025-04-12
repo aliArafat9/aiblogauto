@@ -1,33 +1,62 @@
+"use client";
+
 import React from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/context/auth";
+import { Button } from "../ui/button";
+import { Loader2Icon } from "lucide-react";
 
 export default function LoginModal() {
+  const {
+    user,
+    setUser,
+    loading,
+    loginModalOpen,
+    setLoginModalOpen,
+    handleLoginSubmit,
+  } = useAuthContext();
+
   return (
-    <Dialog open={true}>
+    <Dialog open={loginModalOpen} onOpenChange={setLoginModalOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>
-          <div className="gird gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Email
-              </Label>
+        </DialogHeader>
 
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
               <Input
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
                 id="email"
+                type="email"
                 placeholder="Enter your email"
                 className="col-span-3"
+                required
               />
-            </div>
-          </div>
-        </DialogHeader>
+              <Input
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="col-span-3"
+                required
+              />
+
+              <DialogFooter>
+                <Button disabled={!user.email || loading} type="submit">
+                  {loading && <Loader2Icon className="animate-spin" />}Submit
+                </Button>
+              </DialogFooter>
+            </form>
+
       </DialogContent>
     </Dialog>
   );
