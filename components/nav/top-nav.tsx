@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { ModeToggle } from "@/components/mode-toggle";
 import Link from "next/link";
@@ -7,13 +6,12 @@ import Image from "next/image";
 import { Toaster } from "react-hot-toast";
 import Breadcrumbs from "@/components/nav/breadcrumbs";
 import { useAuthContext } from "@/context/auth";
-import { Button } from "../ui/button";
-import LoginModal from "../modal/login-modal";
+import { Button } from "@/components/ui/button";
+import LoginModal from "@/components/modal/login-modal";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -21,18 +19,27 @@ import {
 export default function TopNav() {
   const { loginModalOpen, setLoginModalOpen, user, loggedIn, logout } =
     useAuthContext();
+
   return (
     <div>
       <nav className="flex justify-between items-center m-2 pb-2 border-b-2">
         <Toaster />
         <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="AI Blog Auto Logo"
-            width={50}
-            height={50}
-          />
+          <Image src="/logo.png" width={50} height={50} alt="logo" />
         </Link>
+
+        <Link href="/blogs">
+          <Button variant="outline">Blogs</Button>
+        </Link>
+
+        <Link href="/search">
+          <Button variant="outline">Search</Button>
+        </Link>
+
+        {/* <pre>
+          {JSON.stringify(user, null, 2)}
+          {JSON.stringify(loggedIn, null, 2)}
+        </pre> */}
 
         {loggedIn ? (
           <>
@@ -45,7 +52,7 @@ export default function TopNav() {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent>
-                <Link href={"/dashboard"}>
+                <Link href="/dashboard">
                   <DropdownMenuItem>Dashboard</DropdownMenuItem>
                 </Link>
 
@@ -59,14 +66,16 @@ export default function TopNav() {
           <>
             <Button
               onClick={() => setLoginModalOpen(!loginModalOpen)}
-              variant={"outline"}
+              variant="outline"
             >
               Login
             </Button>
           </>
         )}
 
-        <Link href="/dashboard/blog-automation">Blog Automation</Link>
+        <a href="/dashboard/blog-automation">
+          <Button variant="outline">Blog Automation</Button>
+        </a>
         <ModeToggle />
       </nav>
       <nav>

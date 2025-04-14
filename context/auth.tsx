@@ -1,7 +1,10 @@
 "use client";
-
 import { useEffect } from "react";
-import { loginOrRegisterAction, authCheckAction, logoutAction } from "@/actions/auth";
+import {
+  loginOrRegisterAction,
+  authCheckAction,
+  logoutAction,
+} from "@/actions/auth";
 import toast from "react-hot-toast";
 
 import React, {
@@ -13,9 +16,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-
 import { UserType } from "@/utils/types";
-import { set } from "mongoose";
 
 type AuthContextType = {
   user: UserType;
@@ -53,7 +54,7 @@ const initialState: UserType = {
 };
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  //state
+  // state
   const [user, setUser] = useState<UserType>(initialState);
   const [loading, setLoading] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -86,18 +87,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     try {
       const res = await loginOrRegisterAction(user.email, user.password || "");
-      console.log("login response => ", res);
 
       if (res?.error) {
         toast.error(res.error);
       } else {
-        setUser(res.user as UserType); 
+        setUser(res.user as UserType);
         setLoggedIn(true);
-        toast.success("Login successful");
+        toast.success("Logged in successfully");
         setLoginModalOpen(false);
       }
-    } catch (error) {
-      toast.error("Something went wrong, please try again later");
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
       setLoginModalOpen(false);
     } finally {
       setLoading(false);
@@ -105,16 +105,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = async (): Promise<void> => {
-    try{
+    try {
       await logoutAction();
       setLoggedIn(false);
       setUser(initialState);
-      toast.success("Logout successful");
-    } catch (error) {
-      console.error(error);
-      toast.error("Logotut failed, please try again later");
+      toast.success("Logged out successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error("Logout failed. Please try again.");
     }
-  }
+  };
 
   return (
     <AuthContext.Provider

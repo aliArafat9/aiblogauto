@@ -20,12 +20,14 @@ export default function Breadcrumbs() {
       {pathSegments.map((segment, index) => {
         const href = "/" + pathSegments.slice(0, index + 1).join("/");
 
-        return <React.Fragment key={index}>
+        return (
+          <React.Fragment key={index}>
             <ChevronRight size={16} />
             <Link href={href} className="hover:underline capitalize">
-                {segment.replace('-'," ")}
+              {segment.replace("-", " ")}
             </Link>
-        </React.Fragment>;
+          </React.Fragment>
+        );
       })}
     </div>
   );
