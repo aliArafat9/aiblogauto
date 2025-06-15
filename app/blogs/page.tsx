@@ -5,9 +5,9 @@ import Link from "next/link";
 import BlogCard from "@/components/blog/blog-card";
 import BlogPagination from "@/components/blog/blog-pagination";
 
-interface BlogsPageProps {
-  searchParams: { page?: string  };
-}
+// interface BlogsPageProps {
+//   searchParams: { page?: string  };
+// }
 
 export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   const page = searchParams?.page
