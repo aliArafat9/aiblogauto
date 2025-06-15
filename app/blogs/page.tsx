@@ -5,7 +5,6 @@ import Link from "next/link";
 import BlogCard from "@/components/blog/blog-card";
 import BlogPagination from "@/components/blog/blog-pagination";
 
-
 export const metadata = {
   title: "Blogs",
   description: "Find the latest blogs",
