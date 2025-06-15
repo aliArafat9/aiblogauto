@@ -5,14 +5,12 @@ import Link from "next/link";
 import BlogCard from "@/components/blog/blog-card";
 import BlogPagination from "@/components/blog/blog-pagination";
 
-// interface BlogsPageProps {
-//   searchParams: { page?: string  };
-// }
-
-export default async function BlogsPage({ searchParams }: BlogsPageProps) {
-  const page = searchParams?.page
-    ? parseInt(searchParams.page as unknown as string, 10)
-    : 1;
+export default async function BlogsPage({
+  searchParams,
+}: {
+  searchParams?: { page?: string };
+}) {
+  const page = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
   const limit = 3;
 
   const { blogs, totalCount } = await getAllBlogsDb(page, limit);
@@ -47,6 +45,3 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
     </div>
   );
 }
-
-
-// what
